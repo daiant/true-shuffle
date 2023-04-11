@@ -3,6 +3,7 @@
   grid-template-columns: 1fr 1fr;
   padding-inline: 24px;
   align-items: flex-start;
+  gap: 16px;
 }
 .aside,.buttons {
   position: sticky;
@@ -58,4 +59,21 @@ li:focus {
   box-shadow: 0 0 0 1px black, 0 0 0 4px #001e1d;
   outline: none;
 
+}
+.loadMore {
+  display: block;
+  margin-inline: auto;
+}
+@media (max-width: 768px) {
+  .App {
+    grid-template-columns: 1fr;
+  }
+  .aside {
+    position: initial;
+  }
+  .songs {
+    background-color: #004643;
+    position: relative;
+    z-index: 1;
+  }
 }

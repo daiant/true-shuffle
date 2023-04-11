@@ -94,7 +94,7 @@ function App() {
               return <li key={track.track.id} onClick={() => playSong([track.track.id])}>{track.track.name}</li>
             })}
           </ul>
-          <button onClick={getMore}>More songs</button>
+          <button className="loadMore" onClick={getMore}>More songs</button>
         </>}
       </div>
     </div >
