@@ -1,0 +1,48 @@
+.App {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding-inline: 24px;
+  align-items: flex-start;
+}
+button {
+  margin-block: 16px;
+}
+.songs button + button {
+  margin-inline-start: 8px;
+}
+.songs button.play {
+  background-color: #f9bc60;
+}
+ul {
+  padding: 0;
+  list-style: none;
+}
+li, .songs button{
+  transition-property: box-shadow, color;
+  transition-duration: 100ms;
+  transition-timing-function: ease;
+}
+li {
+  cursor: pointer;
+  width: fit-content;
+  padding: 2px;
+  border-radius: 2px;
+  user-select: none;
+}
+li + li {
+  margin-block-start: 8px;
+}
+li:hover{
+  text-decoration: underline;
+}
+.songs button:hover {
+  border: 1px solid #001e1d;
+}
+button:focus,
+button:active,
+li:active,
+li:focus {
+  box-shadow: 0 0 0 1px black, 0 0 0 4px #001e1d;
+  outline: none;
+
+}
