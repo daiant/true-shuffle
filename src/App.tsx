@@ -13,8 +13,8 @@ function App() {
   const [code, setCode] = useState<string | undefined>(undefined);
   const [token, setToken] = useState<string | undefined>(undefined);
   const [tracks, setTracks] = useState<any[]>([]);
-
   const [playlists, setPlaylists] = useState<PlaylistItem[]>([]);
+  const [selected, setSelected] = useState('');
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -38,7 +38,9 @@ function App() {
     });
   }
   function selectPlaylist(playlist: PlaylistItem) {
+    console.log('eeiiiii')
     if (!token) return;
+    setSelected(playlist.id);
     getTracks(playlist.tracks.href, token).then((value) => { setTracks(value.items) });
   }
   function getMore() {
@@ -70,15 +72,23 @@ function App() {
         <div className="playlists">
           {user &&
             <ul>
-              {playlists.map((item: PlaylistItem) => <a key={item.id}><li onClick={() => selectPlaylist(item)}>{item.name}</li></a>)}
+              {playlists.map((item: PlaylistItem) => <a key={item.id}>
+                <li
+                  onClick={() => selectPlaylist(item)}
+                  className={item.id === selected ? 'selected' : 'NOT'}>
+                  {item.name}
+                </li>
+              </a>)}
             </ul>
           }
         </div>
       </div>
       <div className="songs">
         {tracks.length > 0 && <>
-          <button onClick={randomize}>Randomize</button>
-          <button onClick={playAll} className='play'>Play All</button>
+          <div className="buttons">
+            <button onClick={randomize}>Randomize</button>
+            <button onClick={playAll} className='play'>Play All</button>
+          </div>
           <ul>
             {tracks.map((track: any) => {
               return <li key={track.track.id} onClick={() => playSong([track.track.id])}>{track.track.name}</li>
@@ -87,7 +97,7 @@ function App() {
           <button onClick={getMore}>More songs</button>
         </>}
       </div>
-    </div>
+    </div >
   )
 }
 

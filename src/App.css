@@ -4,6 +4,16 @@
   padding-inline: 24px;
   align-items: flex-start;
 }
+.aside,.buttons {
+  position: sticky;
+  top: 0;
+}
+.buttons {
+  background: rgb(0,70,67);
+  background: linear-gradient(0deg, rgba(0,70,67,0.7707457983193278) 0%, rgba(0,70,67,1) 100%);
+  
+
+}
 button {
   margin-block: 16px;
 }
@@ -31,6 +41,9 @@ li {
 }
 li + li {
   margin-block-start: 8px;
+}
+li.selected {
+  text-decoration: underline;
 }
 li:hover{
   text-decoration: underline;
