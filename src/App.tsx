@@ -5,7 +5,7 @@ import { UserProfile } from './types/user.types';
 import { getPlaylists } from './lib/playlist/playlist';
 import { PlaylistItem, Playlists, Tracks } from './types/playlists.types';
 import { getTracks } from './lib/tracks/tracks';
-import { play } from './lib/player/player';
+import { getDevices, play } from './lib/player/player';
 import { shuffle } from './lib/random/random';
 
 function App() {
@@ -14,6 +14,8 @@ function App() {
   const [token, setToken] = useState<string | undefined>(undefined);
   const [tracks, setTracks] = useState<any[]>([]);
   const [playlists, setPlaylists] = useState<PlaylistItem[]>([]);
+  const [devices, setDevices] = useState<any[]>([]);
+  const [selectedDevice, setSelectedDevice] = useState('');
   const [selected, setSelected] = useState('');
 
   useEffect(() => {
@@ -33,6 +35,10 @@ function App() {
         getPlaylists(value.user.id, value.token).then((value: Playlists) => {
           setPlaylists(([{ id: 'hehe', name: 'Liked Songs', tracks: { href: 'https://api.spotify.com/v1/me/tracks' } }] as PlaylistItem[]).concat(value.items));
         });
+        getDevices(value.token).then((value: any) => {
+          setDevices(value.devices);
+          setSelectedDevice(value.devices[0].id);
+        })
       }
       else { setCode(undefined); }
     });
@@ -48,7 +54,7 @@ function App() {
   }
   function playSong(id: any) {
     if (!token) return;
-    play(id, token);
+    play(id, selectedDevice, token);
   }
   function randomize() {
     const res = shuffle(tracks);
@@ -80,6 +86,20 @@ function App() {
                 </li>
               </a>)}
             </ul>
+          }
+        </div>
+        <div className="devices">
+          {user && <>
+            <p>Dispositos</p>
+            <ul>
+              {devices.map((device: any) =>
+                <li key={device.id}
+                  onClick={() => setSelectedDevice(device.id)}
+                  className={device.id === selectedDevice ? "selected" : ''}>
+                  {device.name}
+                </li>)}
+            </ul>
+          </>
           }
         </div>
       </div>

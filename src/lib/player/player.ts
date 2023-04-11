@@ -1,8 +1,7 @@
-export async function play(songs: Array<string>, token: string) {
+export async function play(songs: Array<string>, device: string, token: string) {
   const uris = parseSongs(songs);
-  const devices = await getDevices(token);
   const params = new URLSearchParams();
-  params.append("device_id", devices.devices[0].id);
+  params.append("device_id", device);
   const response = await fetch(`https://api.spotify.com/v1/me/player/play?${params}`, {
     method: "PUT", body: JSON.stringify({ uris: uris }), headers: { Authorization: `Bearer ${token}` }
   });
