@@ -1,14 +1,15 @@
-export async function play(songs: Array<string>, device: string, token: string) {
+import { Track } from "../../types/track.types";
+
+export async function play(songs: Array<Track>, device: string, token: string) {
   const uris = parseSongs(songs);
   const params = new URLSearchParams();
   params.append("device_id", device);
-  const response = await fetch(`https://api.spotify.com/v1/me/player/play?${params}`, {
+  fetch(`https://api.spotify.com/v1/me/player/play?${params}`, {
     method: "PUT", body: JSON.stringify({ uris: uris }), headers: { Authorization: `Bearer ${token}` }
   });
-  console.log(await response.status);
 }
-function parseSongs(songs: Array<string>): Array<string> {
-  return songs.map((song: string) => 'spotify:track:' + song);
+function parseSongs(songs: Array<Track>): Array<string> {
+  return songs.map((song: Track) => 'spotify:track:' + song.id);
 }
 
 export async function getDevices(token: string) {

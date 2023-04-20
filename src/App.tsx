@@ -7,16 +7,23 @@ import { PlaylistItem, Playlists, Tracks } from './types/playlists.types';
 import { getTracks } from './lib/tracks/tracks';
 import { getDevices, play } from './lib/player/player';
 import { shuffle } from './lib/random/random';
+import Welcome from './components/welcome/Welcome';
+import Playlist from './components/playlist/Playlist';
+import Title from './components/title/Title';
+import User from './components/user/User';
+import Player from './components/player/Player';
+import { Track } from './types/track.types';
 
 function App() {
   const [user, setUser] = useState<UserProfile | undefined>(undefined);
   const [code, setCode] = useState<string | undefined>(undefined);
   const [token, setToken] = useState<string | undefined>(undefined);
-  const [tracks, setTracks] = useState<any[]>([]);
+  const [tracks, setTracks] = useState<Track[]>([]);
   const [playlists, setPlaylists] = useState<PlaylistItem[]>([]);
   const [devices, setDevices] = useState<any[]>([]);
   const [selectedDevice, setSelectedDevice] = useState('');
   const [selected, setSelected] = useState('');
+  const [playing, setPlaying] = useState<Track | undefined>(undefined);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -44,52 +51,45 @@ function App() {
     });
   }
   function selectPlaylist(playlist: PlaylistItem) {
-    console.log('eeiiiii')
     if (!token) return;
     setSelected(playlist.id);
-    getTracks(playlist.tracks.href, token).then((value) => { setTracks(value.items) });
+    getTracks(playlist.tracks.href, token).then((value: any) => {
+      const tracks: Track[] = value.items.map((item: any) => item.track);
+      setTracks(tracks);
+    });
   }
   function getMore() {
     // TODO: FIX types and arrays
   }
-  function playSong(id: any) {
+  function playSong(track: Track | Track[]) {
     if (!token) return;
-    play(id, selectedDevice, token);
+    play([track].flat(), selectedDevice, token);
+    setPlaying([track].flat()[0]);
   }
   function randomize() {
     const res = shuffle(tracks);
     setTracks([].concat(...res));
   }
   function playAll() {
-    const res = tracks.map((track) => track.track.id);
-    playSong(res);
+    playSong(tracks);
   }
   return (
     <div className="App">
-      <div className="aside">
-        <div className="user">
-          {user &&
-            <p>ya te logiaste: {user?.display_name}</p>
-          }
-          {!code &&
-            <button onClick={() => handleLogin()}>Login puto</button>
-          }
-        </div>
-        <div className="playlists">
-          {user &&
+      {!code && <Welcome onClick={handleLogin} />}
+      {user && <>
+        <div className="aside">
+          <div className="user">
+            <User user={user}></User>
+          </div>
+          <div className="playlists">
+            <Title>Playlists</Title>
             <ul>
-              {playlists.map((item: PlaylistItem) => <a key={item.id}>
-                <li
-                  onClick={() => selectPlaylist(item)}
-                  className={item.id === selected ? 'selected' : 'NOT'}>
-                  {item.name}
-                </li>
-              </a>)}
+              {playlists.map((item: PlaylistItem) =>
+                <Playlist key={item.id} playlist={item} onClick={() => selectPlaylist(item)} selected={item.id === selected}></Playlist>
+              )}
             </ul>
-          }
-        </div>
-        <div className="devices">
-          {user && <>
+          </div>
+          <div className="devices">
             <p>Dispositos</p>
             <ul>
               {devices.map((device: any) =>
@@ -99,24 +99,24 @@ function App() {
                   {device.name}
                 </li>)}
             </ul>
-          </>
-          }
-        </div>
-      </div>
-      <div className="songs">
-        {tracks.length > 0 && <>
-          <div className="buttons">
-            <button onClick={randomize}>Randomize</button>
-            <button onClick={playAll} className='play'>Play All</button>
           </div>
-          <ul>
-            {tracks.map((track: any) => {
-              return <li key={track.track.id} onClick={() => playSong([track.track.id])}>{track.track.name}</li>
-            })}
-          </ul>
-          <button className="loadMore" onClick={getMore}>More songs</button>
-        </>}
-      </div>
+        </div>
+        <div className="songs">
+          {tracks.length > 0 && <>
+            <div className="buttons">
+              <button onClick={randomize}>Randomize</button>
+              <button onClick={playAll} className='play'>Play All</button>
+            </div>
+            <ul>
+              {tracks.map((track: Track) => {
+                return <li key={track.id} onClick={() => playSong([track])}>{track.name}</li>
+              })}
+            </ul>
+            <button className="loadMore" onClick={getMore}>More songs</button>
+          </>}
+        </div>
+        <Player track={playing}></Player>
+      </>}
     </div >
   )
 }

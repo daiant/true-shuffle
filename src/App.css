@@ -9,12 +9,10 @@
   position: sticky;
   top: 0;
 }
-.buttons {
+/* .buttons {
   background: rgb(0,70,67);
   background: linear-gradient(0deg, rgba(0,70,67,0.7707457983193278) 0%, rgba(0,70,67,1) 100%);
-  
-
-}
+} */
 button {
   margin-block: 16px;
 }
@@ -24,38 +22,25 @@ button {
 .songs button.play {
   background-color: #f9bc60;
 }
-ul {
+.playlists ul {
   padding: 0;
   list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 li, .songs button{
   transition-property: box-shadow, color;
   transition-duration: 100ms;
   transition-timing-function: ease;
 }
-li {
-  cursor: pointer;
-  width: fit-content;
-  padding: 2px;
-  border-radius: 2px;
-  user-select: none;
-}
-li + li {
-  margin-block-start: 8px;
-}
-li.selected {
-  text-decoration: underline;
-}
-li:hover{
-  text-decoration: underline;
-}
+
 .songs button:hover {
   border: 1px solid #001e1d;
 }
 button:focus,
 button:active,
-li:active,
-li:focus {
+{
   box-shadow: 0 0 0 1px black, 0 0 0 4px #001e1d;
   outline: none;
 
@@ -71,9 +56,5 @@ li:focus {
   .aside {
     position: initial;
   }
-  .songs {
-    background-color: #004643;
-    position: relative;
-    z-index: 1;
-  }
+
 }

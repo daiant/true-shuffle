@@ -1,0 +1,23 @@
+.wrapper {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  background-color: #434343;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: 32px;
+  padding-inline: 24px;
+  border-top: 2px solid var(--primary);
+}
+.wrapper .song_info {
+  display: flex;
+  column-gap: 2px;
+  align-items: center;
+}
+.wrapper .actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
