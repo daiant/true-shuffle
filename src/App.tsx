@@ -13,6 +13,8 @@ import Title from './components/title/Title';
 import User from './components/user/User';
 import Player from './components/player/Player';
 import { Track } from './types/track.types';
+import TrackItem from './components/track/Track';
+import List from './components/list/List';
 
 function App() {
   const [user, setUser] = useState<UserProfile | undefined>(undefined);
@@ -77,28 +79,28 @@ function App() {
     <div className="App">
       {!code && <Welcome onClick={handleLogin} />}
       {user && <>
+        <div className="user">
+          <User user={user}></User>
+        </div>
         <div className="aside">
-          <div className="user">
-            <User user={user}></User>
-          </div>
           <div className="playlists">
             <Title>Playlists</Title>
-            <ul>
+            <List>
               {playlists.map((item: PlaylistItem) =>
                 <Playlist key={item.id} playlist={item} onClick={() => selectPlaylist(item)} selected={item.id === selected}></Playlist>
               )}
-            </ul>
+            </List>
           </div>
           <div className="devices">
             <p>Dispositos</p>
-            <ul>
+            <List>
               {devices.map((device: any) =>
                 <li key={device.id}
                   onClick={() => setSelectedDevice(device.id)}
                   className={device.id === selectedDevice ? "selected" : ''}>
                   {device.name}
                 </li>)}
-            </ul>
+            </List>
           </div>
         </div>
         <div className="songs">
@@ -107,14 +109,20 @@ function App() {
               <button onClick={randomize}>Randomize</button>
               <button onClick={playAll} className='play'>Play All</button>
             </div>
-            <ul>
+            <List>
               {tracks.map((track: Track) => {
-                return <li key={track.id} onClick={() => playSong([track])}>{track.name}</li>
+                return <TrackItem
+                  key={track.id}
+                  track={track}
+                  onClick={() => playSong([track])}
+                  selected={track.id === playing?.id}
+                ></TrackItem>
               })}
-            </ul>
+            </List>
             <button className="loadMore" onClick={getMore}>More songs</button>
           </>}
         </div>
+        {/* TODO: Update song playing overtime */}
         <Player track={playing}></Player>
       </>}
     </div >

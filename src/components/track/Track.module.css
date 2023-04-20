@@ -6,13 +6,23 @@
   width: 100%;
   cursor: pointer;
 }
-.wrapper .name {
+.wrapper[aria-selected="true"] .info p,
+.wrapper[aria-selected="true"] .actions {
+  color: #1ee3ac;
+}
+.wrapper[aria-selected="true"] .info p + p {
+  color: var(--primary);
+}
+.wrapper .info {
   flex: 1;
   min-width: 0;
 
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+.wrapper .info p + p {
+  color: #DDDDDD;
 }
 .wrapper img {
   height: 36px;

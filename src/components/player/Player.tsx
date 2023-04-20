@@ -7,7 +7,7 @@ export default function Player(props: { track?: Track }) {
       {props.track && <>
         <p>{props.track.name}</p>
         <span>-</span>
-        <p>{props.track.album?.name || 'nose'}</p>
+        <p>{props.track.artists[0].name || 'nose'}</p>
       </>}
     </div>
     <div className={styles.actions}>

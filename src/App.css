@@ -4,10 +4,20 @@
   padding-inline: 24px;
   align-items: flex-start;
   gap: 16px;
+  position: relative;
 }
-.aside,.buttons {
+.user, .buttons {
   position: sticky;
   top: 0;
+}
+.buttons {
+  padding-block: 32px;
+}
+.buttons button {
+  margin-block: 0;
+}
+.buttons button + button {
+  margin-inline-start: 8px;
 }
 /* .buttons {
   background: rgb(0,70,67);
@@ -16,19 +26,10 @@
 button {
   margin-block: 16px;
 }
-.songs button + button {
-  margin-inline-start: 8px;
-}
-.songs button.play {
+button.play {
   background-color: #f9bc60;
 }
-.playlists ul {
-  padding: 0;
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
+
 li, .songs button{
   transition-property: box-shadow, color;
   transition-duration: 100ms;
