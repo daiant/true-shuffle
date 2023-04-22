@@ -1,5 +1,7 @@
 :root {
   --background: #343434;
+  --background-2: #434343;
+  --background-3: #525252;
   --primary: #1E9F7B;
 
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;

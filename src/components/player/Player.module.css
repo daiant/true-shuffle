@@ -1,23 +1,75 @@
 .wrapper {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  background-color: #434343;
-  width: 100%;
-  display: flex;
   align-items: center;
+  background-color: var(--background-2);
+  border-top: 2px solid var(--primary);
+  bottom: 0;
+  display: flex;
   justify-content: space-between;
+  left: 0;
   padding-block: 32px;
   padding-inline: 24px;
-  border-top: 2px solid var(--primary);
+  position: fixed;
+  width: 100%;
 }
 .wrapper .song_info {
-  display: flex;
-  column-gap: 2px;
   align-items: center;
+  column-gap: 2px;
+  display: flex;
 }
 .wrapper .actions {
-  display: flex;
   align-items: center;
+  display: flex;
   gap: 8px;
+}
+.wrapper .actions img {
+  cursor: pointer;
+}
+
+.devices {
+  position: relative;
+}
+.devices .devices_list {
+  --padding-inline: 24px;
+
+  background-color: var(--background-3);
+  border-radius: 4px;
+  border: 2px solid var(--primary);
+  bottom: 0;
+  box-shadow: 2px 2px 6px 0 rgba(0, 0, 0, 0.39);
+  min-width: 100px;
+  padding-block-end: 32px;
+  position: absolute;
+  right: 0;
+  z-index: 2;
+}
+.devices .devices_list .title {
+  border-bottom: 1px solid white;
+  font-weight: bold;
+  margin-block: 16px;
+  margin-inline: calc(var(--padding-inline) - 4px);
+  padding-block: 2px;
+  padding-inline: 2px;
+}
+.devices .devices_list li {
+  color: white;
+  cursor: pointer;
+  display: flex;
+  gap: 16px;
+  justify-content: space-between;
+  padding-inline: var(--padding-inline);
+  white-space: nowrap;
+  width: 100%;
+}
+.devices .devices_list li[aria-selected='true'] {
+  color: var(--primary);
+}
+.devices .devices_list li + li {
+  margin-block-start: 24px;
+}
+
+.devices_mask {
+  background-color: transparent;
+  inset: 0;
+  position: fixed;
+  z-index: 1;
 }

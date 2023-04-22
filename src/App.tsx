@@ -5,7 +5,7 @@ import { UserProfile } from './types/user.types';
 import { getPlaylists } from './lib/playlist/playlist';
 import { PlaylistItem, Playlists, Tracks } from './types/playlists.types';
 import { getTracks } from './lib/tracks/tracks';
-import { getDevices, play } from './lib/player/player';
+import { getDevices, play, togglePlay } from './lib/player/player';
 import { shuffle } from './lib/random/random';
 import Welcome from './components/welcome/Welcome';
 import Playlist from './components/playlist/Playlist';
@@ -15,6 +15,7 @@ import Player from './components/player/Player';
 import { Track } from './types/track.types';
 import TrackItem from './components/track/Track';
 import List from './components/list/List';
+import { Device } from './types/device.types';
 
 function App() {
   const [user, setUser] = useState<UserProfile | undefined>(undefined);
@@ -22,7 +23,7 @@ function App() {
   const [token, setToken] = useState<string | undefined>(undefined);
   const [tracks, setTracks] = useState<Track[]>([]);
   const [playlists, setPlaylists] = useState<PlaylistItem[]>([]);
-  const [devices, setDevices] = useState<any[]>([]);
+  const [devices, setDevices] = useState<Device[]>([]);
   const [selectedDevice, setSelectedDevice] = useState('');
   const [selected, setSelected] = useState('');
   const [playing, setPlaying] = useState<Track | undefined>(undefined);
@@ -75,6 +76,13 @@ function App() {
   function playAll() {
     playSong(tracks);
   }
+  function handlePlayPause() {
+    if (!token) return;
+    togglePlay(token);
+  }
+  function handleSetDevice(device: Device) {
+    setSelectedDevice(device.id);
+  }
   return (
     <div className="App">
       {!code && <Welcome onClick={handleLogin} />}
@@ -123,7 +131,13 @@ function App() {
           </>}
         </div>
         {/* TODO: Update song playing overtime */}
-        <Player track={playing}></Player>
+        <Player
+          track={playing}
+          playPause={handlePlayPause}
+          devices={devices}
+          setDevice={handleSetDevice}
+          selected={selectedDevice}
+        ></Player>
       </>}
     </div >
   )
