@@ -116,16 +116,16 @@ function App() {
             </List>
           </div>
         </div>
-        <div className="songs">
+        <div className="songs" style={{ paddingBottom: '94px' }}>
           {tracks.length > 0 && <>
             <div className="buttons">
               <button onClick={randomize}>Randomize</button>
               <button onClick={playAll} className='play'>Play All</button>
             </div>
             <List>
-              {tracks.map((track: Track) => {
+              {tracks.map((track: Track, index: number) => {
                 return <TrackItem
-                  key={track.id}
+                  key={track.id + index}
                   track={track}
                   onClick={() => playSong([track])}
                   selected={track.id === playing?.id}

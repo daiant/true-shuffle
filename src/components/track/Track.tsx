@@ -5,7 +5,7 @@ import styles from './Track.module.css';
 export default function TrackItem(props: { track: Track, onClick: Function, selected: boolean }) {
   function getImage(): string {
     // TODO: Set image bonita para liked songs
-    return props.track.album.images?.find((value: Image) => value.url)?.url || 'https://picsum.photos/200/300';
+    return props.track.album.images?.find((value: Image) => value.url)?.url || '/default.png';
   }
   return <li className={styles.wrapper} aria-selected={props.selected}>
     <img src={getImage()} />

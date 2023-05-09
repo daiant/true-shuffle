@@ -5,7 +5,7 @@ import styles from './Playlist.module.css';
 export default function Playlist(props: { playlist: PlaylistItem, onClick: Function, selected: boolean }) {
   function getImage(): string {
     // TODO: Set image bonita para liked songs
-    return props.playlist.images?.find((value: Image) => value.url)?.url || 'https://picsum.photos/200/300';
+    return props.playlist.images?.find((value: Image) => value.url)?.url || '/default.png';
   }
   return <li className={styles.wrapper}>
     <img src={getImage()} />
