@@ -4,7 +4,7 @@ import { beginAuthFlow } from './lib/auth/auth'
 import { UserProfile } from './types/user.types';
 import { getPlaylists } from './lib/playlist/playlist';
 import { PlaylistItem, Playlists, Tracks } from './types/playlists.types';
-import { getTracks } from './lib/tracks/tracks';
+import { getAllTracks, getTracks } from './lib/tracks/tracks';
 import { getDevices, play, togglePlay } from './lib/player/player';
 import { shuffle } from './lib/random/random';
 import Welcome from './components/welcome/Welcome';
@@ -22,6 +22,7 @@ function App() {
   const [code, setCode] = useState<string | undefined>(undefined);
   const [token, setToken] = useState<string | undefined>(undefined);
   const [tracks, setTracks] = useState<Track[]>([]);
+  const [nextTracks, setNextTracks] = useState(undefined);
   const [playlists, setPlaylists] = useState<PlaylistItem[]>([]);
   const [devices, setDevices] = useState<Device[]>([]);
   const [selectedDevice, setSelectedDevice] = useState('');
@@ -53,17 +54,21 @@ function App() {
       else { setCode(undefined); }
     });
   }
-  function selectPlaylist(playlist: PlaylistItem) {
+  async function selectPlaylist(playlist: PlaylistItem) {
     if (!token) return;
     setSelected(playlist.id);
-    getTracks(playlist.tracks.href, token).then((value: any) => {
-      const tracks: Track[] = value.items.map((item: any) => item.track);
-      setTracks(tracks);
-    });
+    const { tracks, next } = await getTracks(playlist.tracks.href, token);
+    setTracks(tracks);
+    setNextTracks(next);
   }
-  function getMore() {
-    // TODO: FIX types and arrays
+
+  async function getMore() {
+    if (!nextTracks || !token) return;
+    const { tracks, next } = await getTracks(nextTracks, token);
+    setTracks((previous) => previous.concat(tracks));
+    setNextTracks(next);
   }
+
   function playSong(track: Track | Track[]) {
     if (!token) return;
     play([track].flat(), selectedDevice, token);

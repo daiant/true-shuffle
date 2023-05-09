@@ -1,3 +1,5 @@
+import { Track } from "./track.types"
+
 export interface Playlists {
   href: string
   items: PlaylistItem[]
@@ -6,6 +8,19 @@ export interface Playlists {
   offset: number
   previous: any
   total: number
+}
+export interface PlaylistTracks {
+  href: string
+  items: PlaylistItemTrack[]
+  limit: number
+  next: any
+  offset: number
+  previous: any
+  total: number
+}
+export interface PlaylistItemTrack {
+  added_at: Date,
+  track: Track
 }
 
 export interface PlaylistItem {
