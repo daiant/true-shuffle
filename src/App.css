@@ -6,11 +6,15 @@
   gap: 16px;
   position: relative;
 }
-.user, .buttons {
+.aside {
+  grid-column: 1;
+  position: relative;
   position: sticky;
   top: 0;
 }
 .buttons {
+  /* position: sticky;
+  top: 0; */
   padding-block: 32px;
 }
 .buttons button {

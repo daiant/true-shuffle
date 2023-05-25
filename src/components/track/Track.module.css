@@ -3,7 +3,7 @@
   align-items: center;
   justify-content: space-between;
   column-gap: 16px;
-  width: 100%;
+  /* width: 100%; */
   cursor: pointer;
 }
 .wrapper[aria-selected="true"] .info p,
@@ -15,11 +15,17 @@
 }
 .wrapper .info {
   flex: 1;
+  /* 
   min-width: 0;
-
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis;
+  text-overflow: ellipsis; */
+}
+.wrapper .info p {
+  /* text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 90%;
+  overflow: hidden; */
 }
 .wrapper .info p + p {
   color: #DDDDDD;

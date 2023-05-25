@@ -9,7 +9,7 @@ export default function Playlist(props: { playlist: PlaylistItem, onClick: Funct
   }
   return <li className={styles.wrapper}>
     <img src={getImage()} />
-    <div onClick={() => props.onClick()} className={styles.name}>{props.playlist.name}</div>
+    <p onClick={() => props.onClick()} className={styles.name}>{props.playlist.name}</p>
     {/* TODO: Get Icon */}
     <div className={styles.actions}>---</div>
   </li>

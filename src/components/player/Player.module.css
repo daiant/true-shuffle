@@ -1,7 +1,6 @@
 .wrapper {
   align-items: center;
   background-color: var(--background-2);
-  border-top: 2px solid var(--primary);
   bottom: 0;
   display: flex;
   justify-content: space-between;
@@ -10,6 +9,15 @@
   padding-inline: 24px;
   position: fixed;
   width: 100%;
+}
+.wrapper::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 2px;
+  background-color: var(--primary);
+  width: calc(var(--progress) * 1%);
 }
 .wrapper .song_info {
   align-items: center;

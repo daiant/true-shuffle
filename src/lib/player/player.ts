@@ -15,7 +15,8 @@ export async function play(songs?: Array<Track>, device?: string, token?: string
 
 export async function togglePlay(token: string): Promise<void> {
   const playbackState = await getState(token);
-  if (playbackState.is_playing) {
+
+  if (playbackState?.is_playing) {
     pause(token);
   } else {
     play(undefined, undefined, token);
@@ -38,6 +39,9 @@ export async function getDevices(token: string) {
   return devices.json();
 }
 
-export async function getState(token: string): Promise<Playback> {
-  return (await fetch('https://api.spotify.com/v1/me/player', { headers: { Authorization: `Bearer ${token}` } })).json();
+export async function getState(token: string): Promise<Playback | undefined> {
+  const response = await fetch('https://api.spotify.com/v1/me/player', { headers: { Authorization: `Bearer ${token}` } });
+  if (response.ok && response.body) {
+    return response.json();
+  }
 }

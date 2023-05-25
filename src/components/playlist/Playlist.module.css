@@ -3,16 +3,13 @@
   align-items: center;
   justify-content: space-between;
   column-gap: 16px;
-  width: 100%;
   cursor: pointer;
 }
 .wrapper .name {
   flex: 1;
-  min-width: 0;
-
-  white-space: nowrap;
+  /* white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis;
+  text-overflow: ellipsis; */
 }
 .wrapper img {
   height: 36px;
